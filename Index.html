@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gourav Song Downloader</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.6);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 0 40px rgba(138, 43, 226, 0.5);
+      border: 2px solid #8a2be2;
+    }
+    h1 {
+      font-size: 52px;
+      background: linear-gradient(90deg, #ff00cc, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 22px;
+      color: #b0b0ff;
+      margin-bottom: 30px;
+    }
+    input {
+      width: 88%;
+      padding: 20px;
+      font-size: 18px;
+      background: #1a1a2e;
+      border: 2px solid #8a2be2;
+      color: white;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+    .btn {
+      padding: 18px 60px;
+      font-size: 24px;
+      background: linear-gradient(45deg, #ff00cc, #00ffff);
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 15px 10px;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #00ffff;
+    }
+    .status {
+      margin-top: 30px;
+      font-size: 20px;
+      min-height: 70px;
+    }
+    .neon {
+      text-shadow: 0 0 20px #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="neon">🎵 GOURAV DOWNLOADER</h1>
+    <p class="subtitle">YouTube Songs + Full Playlists MP3 Mein Download Karo</p>
+    
+    <input type="text" id="url" placeholder="YouTube Video ya Playlist ka link paste karo..." />
+    <br>
+    <button class="btn" onclick="download()">🚀 DOWNLOAD NOW</button>
+    
+    <p id="status" class="status"></p>
+
+    <small style="color:#888;">
+      Supports Single Songs + Complete Playlists • 320kbps tak
+    </small>
+  </div>
+
+  <script>
+    function download() {
+      let url = document.getElementById('url').value.trim();
+      let status = document.getElementById('status');
+      
+      if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+        status.innerHTML = "❌ Sirf YouTube link daalo bhai!";
+        return;
+      }
+
+      status.innerHTML = "🔄 Processing... Thoda wait karo";
+
+      // Playlist detect
+      if (url.includes("playlist?list=") || url.includes("/playlist")) {
+        status.innerHTML = "🎶 Playlist Detected! Best site khol raha hoon...";
+        let link = "https://ddownr.com/?url=" + encodeURIComponent(url);
+        window.open(link, "_blank");
+      } 
+      else {
+        status.innerHTML = "🎵 Single Song Detected!";
+        let link = "https://cobalt.tools/?url=" + encodeURIComponent(url);
+        window.open(link, "_blank");
+      }
+
+      setTimeout(() => {
+        status.innerHTML = "✅ New tab mein download options aa gaye!<br><br>Playlist ho toh thoda time lagega.";
+      }, 2000);
+    }
+
+    // Enter key se bhi download ho
+    document.getElementById('url').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') download();
+    });
+  </script>
+</body>
+</html>
