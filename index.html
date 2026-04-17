@@ -4,122 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gourav Song Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-    
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-      margin: 0;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #1a0033, #000000);
     }
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      background: rgba(0,0,0,0.6);
-      padding: 50px 40px;
-      border-radius: 30px;
-      box-shadow: 0 0 40px rgba(138, 43, 226, 0.5);
-      border: 2px solid #8a2be2;
-    }
-    h1 {
-      font-size: 52px;
-      background: linear-gradient(90deg, #ff00cc, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      font-size: 22px;
-      color: #b0b0ff;
-      margin-bottom: 30px;
-    }
-    input {
-      width: 88%;
-      padding: 20px;
-      font-size: 18px;
-      background: #1a1a2e;
-      border: 2px solid #8a2be2;
-      color: white;
-      border-radius: 15px;
-      margin: 20px 0;
-    }
-    .btn {
-      padding: 18px 60px;
-      font-size: 24px;
-      background: linear-gradient(45deg, #ff00cc, #00ffff);
-      color: black;
-      font-weight: bold;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      margin: 15px 10px;
-      transition: all 0.3s;
-    }
-    .btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 30px #00ffff;
-    }
-    .status {
-      margin-top: 30px;
-      font-size: 20px;
-      min-height: 70px;
-    }
-    .neon {
-      text-shadow: 0 0 20px #00ffff;
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1 class="neon">🎵 GOURAV DOWNLOADER</h1>
-    <p class="subtitle">YouTube Songs + Full Playlists MP3 Mein Download Karo</p>
+<body class="min-h-screen text-white flex items-center justify-center p-4">
+  <div class="max-w-lg w-full glass border border-purple-500 rounded-3xl shadow-2xl p-8">
     
-    <input type="text" id="url" placeholder="YouTube Video ya Playlist ka link paste karo..." />
-    <br>
-    <button class="btn" onclick="download()">🚀 DOWNLOAD NOW</button>
-    
-    <p id="status" class="status"></p>
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="text-6xl mb-3">🎵</div>
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-400 to-cyan-400 bg-clip-text text-transparent">
+        GOURAV DOWNLOADER
+      </h1>
+      <p class="text-purple-300 mt-2">YouTube Songs + Playlists</p>
+    </div>
 
-    <small style="color:#888;">
-      Supports Single Songs + Complete Playlists • 320kbps tak
-    </small>
+    <!-- Input -->
+    <div class="mb-6">
+      <div class="relative">
+        <input 
+          type="text" 
+          id="url" 
+          placeholder="YouTube video ya playlist link paste karo..."
+          class="w-full bg-white/10 border border-purple-400 focus:border-pink-400 rounded-2xl px-6 py-5 text-lg outline-none transition-all">
+        <i class="fa-solid fa-link absolute right-6 top-6 text-purple-400"></i>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex flex-col gap-4">
+      <button onclick="download()" 
+              class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 py-6 rounded-2xl text-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95">
+        <i class="fa-solid fa-download"></i>
+        DOWNLOAD MP3
+      </button>
+    </div>
+
+    <p id="status" class="text-center mt-6 min-h-[50px] text-sm"></p>
+
+    <div class="text-center text-xs text-purple-400 mt-8">
+      Single Song + Full Playlist Supported<br>
+      Best Quality • Fast • Free
+    </div>
   </div>
 
   <script>
     function download() {
       let url = document.getElementById('url').value.trim();
       let status = document.getElementById('status');
-      
-      if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
-        status.innerHTML = "❌ Sirf YouTube link daalo bhai!";
+
+      if (!url) {
+        status.innerHTML = `<span class="text-red-400">❌ Link daal bhai!</span>`;
         return;
       }
 
-      status.innerHTML = "🔄 Processing... Thoda wait karo";
+      status.innerHTML = `<span class="text-yellow-400">🔄 Processing... Best site khol raha hoon</span>`;
 
-      // Playlist detect
       if (url.includes("playlist?list=") || url.includes("/playlist")) {
-        status.innerHTML = "🎶 Playlist Detected! Best site khol raha hoon...";
-        let link = "https://ddownr.com/?url=" + encodeURIComponent(url);
-        window.open(link, "_blank");
-      } 
-      else {
-        status.innerHTML = "🎵 Single Song Detected!";
-        let link = "https://cobalt.tools/?url=" + encodeURIComponent(url);
-        window.open(link, "_blank");
+        // Playlist
+        window.open("https://loader.to/?url=" + encodeURIComponent(url), "_blank");
+        status.innerHTML = `<span class="text-green-400">🎶 Playlist khul gayi! Waha se download kar lo</span>`;
+      } else {
+        // Single Song
+        window.open("https://ytmp3.cc/?url=" + encodeURIComponent(url), "_blank");
+        status.innerHTML = `<span class="text-green-400">🎵 Song page khul gaya! MP3 download kar lo</span>`;
       }
-
-      setTimeout(() => {
-        status.innerHTML = "✅ New tab mein download options aa gaye!<br><br>Playlist ho toh thoda time lagega.";
-      }, 2000);
     }
 
-    // Enter key se bhi download ho
-    document.getElementById('url').addEventListener('keypress', function(e) {
+    // Enter key support
+    document.getElementById('url').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') download();
     });
   </script>
