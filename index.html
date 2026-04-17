@@ -3,87 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gourav Song Downloader</title>
+  <title>Gourav Downloader</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <style>
-    body {
-      background: linear-gradient(135deg, #1a0033, #000000);
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-    }
-  </style>
 </head>
-<body class="min-h-screen text-white flex items-center justify-center p-4">
-  <div class="max-w-lg w-full glass border border-purple-500 rounded-3xl shadow-2xl p-8">
-    
-    <!-- Header -->
-    <div class="text-center mb-8">
-      <div class="text-6xl mb-3">🎵</div>
-      <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-400 to-cyan-400 bg-clip-text text-transparent">
-        GOURAV DOWNLOADER
-      </h1>
-      <p class="text-purple-300 mt-2">YouTube Songs + Playlists</p>
-    </div>
+<body class="bg-black text-white min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-zinc-900 rounded-3xl p-8">
+    <h1 class="text-4xl font-bold text-center mb-8">🎵 GOURAV DOWNLOADER</h1>
 
-    <!-- Input -->
-    <div class="mb-6">
-      <div class="relative">
-        <input 
-          type="text" 
-          id="url" 
-          placeholder="YouTube video ya playlist link paste karo..."
-          class="w-full bg-white/10 border border-purple-400 focus:border-pink-400 rounded-2xl px-6 py-5 text-lg outline-none transition-all">
-        <i class="fa-solid fa-link absolute right-6 top-6 text-purple-400"></i>
-      </div>
-    </div>
+    <input id="url" type="text" placeholder="YouTube ya JioSaavn link paste karo" 
+           class="w-full bg-zinc-800 p-5 rounded-2xl mb-6">
 
-    <!-- Buttons -->
-    <div class="flex flex-col gap-4">
-      <button onclick="download()" 
-              class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 py-6 rounded-2xl text-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95">
-        <i class="fa-solid fa-download"></i>
-        DOWNLOAD MP3
+    <div class="grid grid-cols-2 gap-4">
+      <button onclick="youtubeDownload()" class="bg-purple-600 py-6 rounded-2xl font-bold">
+        YouTube Song/Playlist
+      </button>
+      <button onclick="jiosaavnHelp()" class="bg-pink-600 py-6 rounded-2xl font-bold">
+        JioSaavn Song
       </button>
     </div>
 
-    <p id="status" class="text-center mt-6 min-h-[50px] text-sm"></p>
-
-    <div class="text-center text-xs text-purple-400 mt-8">
-      Single Song + Full Playlist Supported<br>
-      Best Quality • Fast • Free
-    </div>
+    <p id="status" class="mt-8 text-center text-sm"></p>
   </div>
 
   <script>
-    function download() {
-      let url = document.getElementById('url').value.trim();
-      let status = document.getElementById('status');
-
-      if (!url) {
-        status.innerHTML = `<span class="text-red-400">❌ Link daal bhai!</span>`;
-        return;
-      }
-
-      status.innerHTML = `<span class="text-yellow-400">🔄 Processing... Best site khol raha hoon</span>`;
-
-      if (url.includes("playlist?list=") || url.includes("/playlist")) {
-        // Playlist
-        window.open("https://loader.to/?url=" + encodeURIComponent(url), "_blank");
-        status.innerHTML = `<span class="text-green-400">🎶 Playlist khul gayi! Waha se download kar lo</span>`;
-      } else {
-        // Single Song
-        window.open("https://ytmp3.cc/?url=" + encodeURIComponent(url), "_blank");
-        status.innerHTML = `<span class="text-green-400">🎵 Song page khul gaya! MP3 download kar lo</span>`;
-      }
+    function youtubeDownload() {
+      let url = document.getElementById('url').value;
+      document.getElementById('status').innerHTML = "✅ YouTube ke liye: <a href='https://media.ytmp3.gg/?url=" + encodeURIComponent(url) + "' target='_blank' class='text-purple-400 underline'>Yahan click karo</a>";
     }
 
-    // Enter key support
-    document.getElementById('url').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') download();
-    });
+    function jiosaavnHelp() {
+      document.getElementById('status').innerHTML = `
+        JioSaavn ke liye direct download nahi hota.<br><br>
+        ✅ Best tareeka:<br>
+        1. JioSaavn Pro le lo (sabse safe)<br>
+        2. Ya Chrome Extension use karo: "JioSaavn Song Downloader"
+      `;
+    }
   </script>
 </body>
 </html>
